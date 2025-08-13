@@ -1,5 +1,7 @@
+import 'package:appaula02/screen/telacalc.dart';
 import 'package:flutter/material.dart';
-
+import 'package:get/get.dart' ; // biblioteca que permite importar o gerenciador
+// de estados Getx
 void main() {
   runApp(TelaHome());
 }
@@ -9,7 +11,9 @@ class TelaHome extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return GetMaterialApp(
+      // retira a faixa debug do app
+      debugShowCheckedModeBanner: false,
       title: "App Aula 02 - Responsivo",
       home: ResponsiveHome(),
     );
@@ -37,16 +41,29 @@ class ResponsiveHome extends StatelessWidget {
         backgroundColor: Colors.red,
       ),
       drawer: isMobile ?Drawer(
+        backgroundColor: Colors.red,
         child: ListView(
           children: [
             DrawerHeader(
+              
               child: Text('Menu'),
               ),
               ListTile(
                 title: Text('Item 1'),
+                
+                onLongPress: () {
+                  Navigator.push(context, MaterialPageRoute(
+                    builder:(context)=>TelaCalculadora()));
+                },
               ),
               ListTile(
                 title: Text('Item 2'),
+                
+                   onTap: () {
+                  Navigator.push(context, MaterialPageRoute(
+                    builder:(context)=>SumApp()));
+                   }
+                
               ),
 
           ],
@@ -78,9 +95,9 @@ class ResponsiveHome extends StatelessWidget {
               children: [
                 Text('Screen width: ${screenWidth}',style: TextStyle(fontSize: screenWidth/10),),
                 Text('Screen height: ${screenWidth}',style: TextStyle(fontSize: screenWidth/10)),
-                if(isMobile) Text('This a mobile view'),
-                if(isTablet) Text('This is a tablet view'),
-                if(isDesktop) Text('This a desktop view')
+                if(isMobile) Text('This a mobile view',style: TextStyle(fontSize: screenWidth/10),),
+                if(isTablet) Text('This is a tablet view',style: TextStyle(fontSize: screenWidth/10)),
+                if(isDesktop) Text('This a desktop view',style: TextStyle(fontSize: screenWidth/10))
               ],
             ),
           ))
