@@ -9,15 +9,14 @@ class TelaHome extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('App aula 03 - BD - Shared preferences'),
-      ),
-      body: MaterialApp(
-        home: TelaApp(),
-      ),
+    return MaterialApp(
+      title: 'Aula 03 App Sharedpreferences',
+      home: TelaApp(),
     );
-  }
+    
+  } 
+    
+   
 }
 
 class TelaApp extends StatefulWidget {
