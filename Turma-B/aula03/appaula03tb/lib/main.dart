@@ -10,6 +10,7 @@ class TelaHome extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'Aula 03 App Sharedpreferences',
       home: TelaApp(),
     );
@@ -30,8 +31,10 @@ class _TelaAppState extends State<TelaApp> {
   final _ctrlNome = TextEditingController(); // Variavel para armazenar o que o usuario digita
   String _nomeSalvo =""; // Variavel para pegar informações do banco de dados
 
-  static const String _kUsername = 'username';
+  static const String _kUsernames = 'usernames';
   bool _existeUsername = false;
+  // Cria uma lista para armazenar os nomes
+  List<String> _nomes =[];
   @override
   void initState(){
     super.initState();
@@ -50,13 +53,19 @@ class _TelaAppState extends State<TelaApp> {
     // Faz a leitura do Sharedpreferences
     final prefs =await SharedPreferences.getInstance();
     final nome = _ctrlNome.text.trim(); // trim remove os espaços em branco
-    if(nome.isEmpty){
-      _mostrarSnack('Digite um nome antes de salvar');
+    final atuais = prefs.getStringList(_kUsernames)??[];
+    if(atuais.contains(nome)){
+      _snack('Esse nome ja esta na lista');
       return;
     }
-    await prefs.setString(_kUsername, nome); // salva a informaçao
-    _mostrarSnack('Nome salvo com sucesso ${nome} !');
-    await _carregarNome(); // atualiza exibição
+    atuais.add(nome); // atualiza a lista de nomes
+    await prefs.setStringList(_kUsernames, atuais); // salva a informaçao
+     setState(() => _nomes = List<String>.from(atuais));
+     _ctrlNome.clear(); // limpa o campo texto
+
+    
+    _snack('Nome salvo com sucesso  !');
+    
 
 
   }
@@ -65,31 +74,40 @@ class _TelaAppState extends State<TelaApp> {
   Future<void> _carregarNome()async{
     // realiza a leitura do que está armazenado
     final prefs = await SharedPreferences.getInstance();
-    final nome = prefs.getString(_kUsername)??''; 
-    final existe = prefs.containsKey(_kUsername);
-    setState(() {
-      _nomeSalvo =nome;
-      _existeUsername=existe;
-    });
+    setState(()=> _nomes = prefs.getStringList(_kUsernames)??[]);
+     
 
   }
 
   // Função para remover um nome
-  Future<void> _removerNome()async{
+  Future<void> _removerNome(String nome)async{
     final prefs = await SharedPreferences.getInstance();
-    await prefs.remove(_kUsername);
-    _mostrarSnack('Nome removido');
+    final atuais =  prefs.getStringList(_kUsernames)?? [];
+    atuais.remove(nome);
+    await prefs.setStringList(_kUsernames, atuais);
+    setState(() =>_nomes =List<String>.from(atuais));
+    _snack('Removido $nome');
+      
+    
 
   }
 
+Future<void> _limparTudo()async{
+  final prefs = await SharedPreferences.getInstance();
+  await prefs.remove(_kUsernames);
+  setState(() => _nomes=[]);
+
+}
   // Cria a função da snack
-  void _mostrarSnack(String msg){
+  void _snack(String msg){
     ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(msg)));
   }
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        
+        backgroundColor: Colors.blue,
+        title: Text('App aula 03 - SharedPreferences'),
+        centerTitle: true,
       ),
       body: 
        Padding(
@@ -122,31 +140,59 @@ class _TelaAppState extends State<TelaApp> {
                     label: Text('Carregar'))),
                     SizedBox(height: 8,),
                     Expanded(child: OutlinedButton.icon(
-                      onPressed:_existeUsername? _removerNome:null,icon: Icon(Icons.delete), 
+                      onPressed:_nomes.isEmpty? null: _limparTudo,icon: Icon(Icons.delete), 
                       label: Text('Remover')))
               ],
             ),
-            SizedBox(height: 24,),
-            Card(
-              child: Padding(
-                padding: const EdgeInsets.all(16),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                  Text('Resultado',style: TextStyle(fontSize: 18,fontWeight: FontWeight.bold),),
-                  SizedBox(height: 8,),
-                  Text('Nome salvo: ${_nomeSalvo.isEmpty? '(vazio)':_nomeSalvo}'),
-                  SizedBox(height: 4,),
-                  Text(_existeUsername ?'A chave "$_kUsername existe no armazenamento':'A chave "$_kUsername" nao existe no armazenamento'),
-         
+            SizedBox(height: 16,),
+            Expanded(
+              child: _nomes.isEmpty?
+              const Center(
+                child: Text('Sem nomes salvos'),
+              ):ListView.separated(
+                itemCount: _nomes.length,
+                separatorBuilder: (_,__)=>const Divider(height: 1,),
+                itemBuilder: (context,i){
+                  final nome = _nomes[i];
+                  return Dismissible(
+                    key: ValueKey(nome),
+                    background: Container(
+                      alignment: Alignment.centerLeft,
+                      padding: EdgeInsets.symmetric(horizontal: 16),
+                      child: Icon(Icons.delete),
+                    ),
+                      secondaryBackground: Container(
+                      alignment: Alignment.centerRight,
+                      padding: EdgeInsets.symmetric(horizontal: 16),
+                      child: Icon(Icons.delete),
+                                           ),
+                     onDismissed: (__)=>_removerNome(nome),
+                     child: ListTile(
+                      leading: CircleAvatar(
+                        child: Text(nome.isNotEmpty? nome[0].toUpperCase():'?'),
+                      ),
+                      title: Text(nome),
+                      trailing: IconButton(
+                        onPressed: ()=>_removerNome(nome), icon: Icon(Icons.delete)),
+                     ),
+                     
+                     
+                     );
+                     
+
+                },
+                )
+
+              ),
+              Align(
+                alignment: Alignment.centerRight,
+                child: Text('Total: ${_nomes.length}'),
+              )
+            
                     
                   ],
                 ),
               ),
-            )
-          ],
-               ),
-       ),
     );
   }
 }
