@@ -13,6 +13,9 @@ class TelaHome extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Aula 03 App Sharedpreferences',
       home: TelaApp(),
+      
+      theme: ThemeData(useMaterial3: true,colorSchemeSeed: Colors.blue),
+      
     );
     
   } 
