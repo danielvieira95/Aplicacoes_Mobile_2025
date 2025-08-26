@@ -3,16 +3,17 @@ import 'package:sqflite/sqflite.dart'; // importa a biblioteca que permite a man
 import 'package:path/path.dart'; // permite pegar o diretorio de onde o banco de dados é criado
 
 void main() async{
-  runApp(MaterialApp(
-    home: Home(),
-  ));
-
   WidgetsFlutterBinding.ensureInitialized(); // Para garantir que o Flutter esteja inicializado antes de acessar o banco de dados
   // salvando informação no banco de dados
 
   await _insertInitialDog();   // Espera a inserção do cachorro para construir o widget
-  var Rocky = Dog(id: 0, nome: "Rocky", idade: 3);
-  await updateDog(Rocky);
+  //var Rocky = Dog(id: 0, nome: "Rocky", idade: 3);
+  runApp(MaterialApp(
+    home: Home(),
+  ));
+
+  
+ // await updateDog(Rocky);
   
 
 
@@ -99,31 +100,45 @@ class _HomeState extends State<Home> {
         title: Text('Aula 04 - APP BD'),
       ),
 
-      body: FutureBuilder<List<Dog>>(
-        future: _dogs,
-        builder: (context,snapshot){
-          if(snapshot.connectionState==ConnectionState.waiting){
-            return Center(
-              child: CircularProgressIndicator(),);
-              } else if(snapshot.hasError){
-                return Center(child: Text('Error: ${snapshot.error}'),);
+      body: Column(
+        children: [
+          ElevatedButton(onPressed: ()async{
+            final db = await _initializeDatabase();
+            final dog = Dog(id: 3, nome: "Rocky", idade: 3);
+            await _insertDog(db, dog);
+            setState(() {
+              _dogs = _fetchDogs();
+            });
 
-              }else{
-                final dogs = snapshot.data!; // armazena os dados
-                return ListView.builder(
-                  itemCount: dogs.length,
-                  itemBuilder: (context, index) {
-                    final dog = dogs[index];
-                    return ListTile(
-                      title: Text(dog.nome),
-                      subtitle: Text('Idade: ${dog.idade}'),
-                    );
-                  },
-                  );
-              }
-                
-              }
-        ));
+          }, child: Text('Adicionar cachorro')),
+          FutureBuilder<List<Dog>>(
+            future: _dogs,
+            builder: (context,snapshot){
+              if(snapshot.connectionState==ConnectionState.waiting){
+                return Center(
+                  child: CircularProgressIndicator(),);
+                  } else if(snapshot.hasError){
+                    return Center(child: Text('Error: ${snapshot.error}'),);
+          
+                  }else{
+                    final dogs = snapshot.data!; // armazena os dados
+                    return ListView.builder(
+                      itemCount: dogs.length,
+                      itemBuilder: (context, index) {
+                        final dog = dogs[index];
+                        return ListTile(
+                          title: Text(dog.nome),
+                          subtitle: Text('Idade: ${dog.idade}'),
+                        );
+                      },
+                      );
+                  }
+                    
+                  }
+            ),
+        ],
+      ),
+        );
       
         
       
