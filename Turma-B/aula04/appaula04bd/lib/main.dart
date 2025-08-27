@@ -74,6 +74,7 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   TextEditingController nomedog = TextEditingController();
   TextEditingController idade = TextEditingController();
+  int cont =0;
   // late  
   late Future<List<Dog>> _dogs;
   @override
@@ -122,9 +123,11 @@ class _HomeState extends State<Home> {
 
           ElevatedButton(onPressed: ()async{
             final db = await _initializeDatabase();
-            final dog = Dog(id: 9, nome: nomedog.text, idade: int.parse(idade.text));
+            final dog = Dog(id: cont, nome: nomedog.text, idade: int.parse(idade.text));
             await _insertDog(db, dog);
+
             setState(() {
+              cont = cont+1;
               _dogs = _fetchDogs();
             });
 
@@ -146,13 +149,42 @@ class _HomeState extends State<Home> {
                       itemBuilder: (context, index) {
                         final dog = dogs[index];
                         return ListTile(
-                          title: Text(dog.nome),
-                          subtitle: Text('Idade: ${dog.idade}'),
-                          onLongPress: () {
-                            deleteDog(dog.id);
+                          title: InkWell(
+                          onTap: () async{
+                            final confirmar = await showDialog<bool>(
+                              context: context, builder: (_)=>AlertDialog(
+                                title: Text('Deletar'),
+                                content: Text('Deseja deletar ${dog.nome}?'),
+                                actions: [
+                                  TextButton(
+                                    onPressed: ()=>Navigator.pop(context,true), child: Text('Deletar'))
+                                ],
+                              ),
+                              
+                              )?? false;
+                              if(!confirmar) return;
+                              await deleteDog(dog.id);
+                              setState(() {
+                                _dogs = _fetchDogs(); // recarrega a lista
+                              });
+                              ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                                content: Text("${dog.nome} deletado")));
                           },
+                          child: Text(dog.nome,style: TextStyle(
+                            decoration: TextDecoration.underline, // indica que o texto é clicavel
+                          ),
+                          ),
+                          
+                          ),
+                          subtitle: Text('Idade: ${dog.idade}'),
+                          trailing: Text('ID: ${dog.id}'),
+                          
+                          
+                          
                         );
+                        
                       },
+                      
                       );
                   }
                     
