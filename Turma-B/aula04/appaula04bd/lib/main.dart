@@ -72,6 +72,8 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
+  TextEditingController nomedog = TextEditingController();
+  TextEditingController idade = TextEditingController();
   // late  
   late Future<List<Dog>> _dogs;
   @override
@@ -95,6 +97,7 @@ class _HomeState extends State<Home> {
 
   }
   Widget build(BuildContext context) {
+
     return Scaffold(
       appBar: AppBar(
         title: Text('Aula 04 - APP BD'),
@@ -102,16 +105,32 @@ class _HomeState extends State<Home> {
 
       body: Column(
         children: [
+          TextField(
+            keyboardType: TextInputType.name,
+            controller: nomedog,
+            decoration: InputDecoration(
+             labelText: 'Digite o nome do dog'
+            ),
+          ),
+          TextField(
+            keyboardType: TextInputType.number,
+            controller: idade,
+            decoration: InputDecoration(
+             labelText: 'Digite a idade do dog'
+            ),
+          ),
+
           ElevatedButton(onPressed: ()async{
             final db = await _initializeDatabase();
-            final dog = Dog(id: 3, nome: "Rocky", idade: 3);
+            final dog = Dog(id: 9, nome: nomedog.text, idade: int.parse(idade.text));
             await _insertDog(db, dog);
             setState(() {
               _dogs = _fetchDogs();
             });
 
           }, child: Text('Adicionar cachorro')),
-          FutureBuilder<List<Dog>>(
+          Expanded(
+            child: FutureBuilder<List<Dog>>(
             future: _dogs,
             builder: (context,snapshot){
               if(snapshot.connectionState==ConnectionState.waiting){
@@ -129,6 +148,9 @@ class _HomeState extends State<Home> {
                         return ListTile(
                           title: Text(dog.nome),
                           subtitle: Text('Idade: ${dog.idade}'),
+                          onLongPress: () {
+                            deleteDog(dog.id);
+                          },
                         );
                       },
                       );
@@ -136,6 +158,7 @@ class _HomeState extends State<Home> {
                     
                   }
             ),
+          )
         ],
       ),
         );
