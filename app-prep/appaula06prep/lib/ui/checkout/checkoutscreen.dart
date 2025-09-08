@@ -88,8 +88,8 @@ class Checkoutscreen extends StatelessWidget {
                     color: AppColors.fundoCards,
                   ),
                   Container(
-                    width: 80,
-                    height: 50,
+                    width: 100,
+                    height: 80,
                     color: AppColors.fundoCards,
                     child: Padding(
                       padding: const EdgeInsets.all(12.0),
@@ -99,12 +99,14 @@ class Checkoutscreen extends StatelessWidget {
                       ),
                     ),
                   ),
-                  const Positioned(
-                    left: 100,
-                    child: Text(
-                      'Visa',
-                      style: TextStyle(fontSize: 14, color: Colors.white),
-                    ),
+                  Column(
+                    children: [
+                      Text(
+                        'Visa Classic',
+                        style: TextStyle(fontSize: 18, color: Colors.white),
+                      ),
+                    
+                    ],
                   ),
                 ],
               ),
@@ -122,8 +124,10 @@ class Checkoutscreen extends StatelessWidget {
               // botão pedir
               ElevatedButton(
                 style: ElevatedButton.styleFrom(
+                  
                   backgroundColor: Colors.orange,
                   padding: const EdgeInsets.symmetric(vertical: 16),
+                  
                 ),
                 onPressed: () {
                   // aqui você define a ação do pedido
