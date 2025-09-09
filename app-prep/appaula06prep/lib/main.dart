@@ -5,9 +5,7 @@ import 'package:appaula06prep/ui/splash/splash_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-// aula 1 palavra chave Alura
-// aula 02 widgets
-// aula 03. Guia de mergulho
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   RestaurantData restaurantsData = RestaurantData();

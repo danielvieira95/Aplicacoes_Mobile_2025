@@ -133,9 +133,11 @@ class Checkoutscreen extends StatelessWidget {
                   
                 ),
                 onPressed: () {
+                  bagProvider.clearBag();
                   // aqui você define a ação do pedido
                   ScaffoldMessenger.of(context).showSnackBar(
                     const SnackBar(content: Text("Pedido realizado!")),
+                  
                   );
                 },
                 child: const Text(

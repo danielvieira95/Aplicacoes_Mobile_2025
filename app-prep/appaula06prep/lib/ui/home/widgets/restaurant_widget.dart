@@ -2,8 +2,6 @@ import 'package:appaula06prep/model/restaurant.dart';
 import 'package:appaula06prep/ui/restaurant/restaurantscreen.dart';
 import 'package:flutter/material.dart';
 
-
-
 class RestaurantWidget extends StatelessWidget {
   final Restaurant restaurant;
   const RestaurantWidget({super.key, required this.restaurant});

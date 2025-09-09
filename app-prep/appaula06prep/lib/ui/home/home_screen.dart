@@ -60,8 +60,7 @@ class HomeScreen extends StatelessWidget {
                   children: List.generate(
                     restaurantData.listRestaurant.length,
                     (index) {
-                      Restaurant restaurant =
-                          restaurantData.listRestaurant[index];
+                      Restaurant restaurant =restaurantData.listRestaurant[index];
                       return RestaurantWidget(restaurant: restaurant);
                     },
                   ),

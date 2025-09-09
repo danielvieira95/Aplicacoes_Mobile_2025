@@ -1,8 +1,6 @@
 import 'package:appaula06prep/model/dish.dart';
-
 class Restaurant {
-   
-   String id;
+     String id;
   String imagePath;
   String name;
   String description;
