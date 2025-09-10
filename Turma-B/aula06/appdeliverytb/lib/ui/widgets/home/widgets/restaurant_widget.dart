@@ -1,4 +1,5 @@
 import 'package:appdeliverytb/model/restaurant.dart';
+import 'package:appdeliverytb/ui/widgets/restaurant/restaurantscreen.dart';
 import 'package:flutter/material.dart';
 
 class RestaurantWidget extends StatelessWidget {
@@ -9,14 +10,14 @@ class RestaurantWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Material(
       child: InkWell(
-       /* onTap: () {
+        onTap: () {
           Navigator.push(context, MaterialPageRoute(
             builder: (context){
               // criar a classe restaurante screen
-              return Restaurantscreen(restaurant:restaurant)
+              return Restaurantscreen(restaurant: restaurant);
 
             }));
-        },*/
+        },
         child: Row(
           spacing: 12,
           children: [
