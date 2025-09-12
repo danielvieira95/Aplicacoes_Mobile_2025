@@ -62,7 +62,7 @@ String toString(){
   imagePath: $imagePath,
   name: $name,
   description: $description,
-  stars: $stars,
+  //stars: $stars,
   distance: $distance,
   categories: $categories
   }''';
