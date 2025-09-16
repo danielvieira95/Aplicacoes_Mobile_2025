@@ -4,6 +4,7 @@ import 'package:appaula06prep/model/restaurant.dart';
 import 'package:appaula06prep/ui/_core/widgets/app_colors.dart';
 import 'package:appaula06prep/ui/_core/widgets/appbar.dart';
 import 'package:appaula06prep/ui/home/widgets/category_widget.dart';
+import 'package:appaula06prep/ui/home/widgets/drinks/drinks_screen.dart';
 import 'package:appaula06prep/ui/home/widgets/restaurant_widget.dart';
 import 'package:flutter/material.dart';
 
@@ -34,6 +35,32 @@ class HomeScreen extends StatelessWidget {
                 SingleChildScrollView(
                   scrollDirection: Axis.horizontal,
                   child: Row(
+                    spacing: 8,
+                    children: List.generate(
+                      CategoriesData.listCategories.length,
+                      (index) {
+                        final String cat = CategoriesData.listCategories[index];
+                        final isBebidas = cat.toLowerCase() == 'bebidas';
+
+                        return CategoryWidget(
+                          category: cat,
+                          onTap: isBebidas
+                              ? () {
+                                  Navigator.of(context).push(
+                                    MaterialPageRoute(
+                                        builder: (_) =>
+                                            BeveragesScreen()),
+                                  );
+                                }
+                              : null, // mantém comportamento normal para as outras
+                        );
+                      },
+                    ),
+                  ),
+                ),
+                /*SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
+                  child: Row(
                     // Lista que vai ser gerada das categories
                     spacing: 8,
                     children: List.generate(
@@ -45,7 +72,7 @@ class HomeScreen extends StatelessWidget {
                       },
                     ),
                   ),
-                ),
+                ),*/
                 Image.asset('assets/banners/banner_promo.png'),
                 Text(
                   'Bem avaliados',
@@ -62,6 +89,7 @@ class HomeScreen extends StatelessWidget {
                     (index) {
                       Restaurant restaurant =restaurantData.listRestaurant[index];
                       return RestaurantWidget(restaurant: restaurant);
+                      
                     },
                   ),
                 ),
