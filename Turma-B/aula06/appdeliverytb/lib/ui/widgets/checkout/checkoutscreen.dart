@@ -81,14 +81,10 @@ class Checkoutscreen extends StatelessWidget {
                 ),
                 
               ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: [
               Positioned(
                 left: 100,
-                child: Text('Visa Classic',style: TextStyle(fontSize: 18,color: Colors.white),))
-            ],
-          ),
+                child: Text('Visa Classic',style: TextStyle(fontSize: 18,color: Colors.white),)),
+              
             ],
 
           ),
