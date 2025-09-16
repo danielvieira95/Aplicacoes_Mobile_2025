@@ -49,7 +49,8 @@ class Restaurant {
         stars: map['stars'], 
         distance: map['distance'], 
         categories: List<String>.from(map['categories']), 
-        dishes: List<Dish>.from(map['dishes'].map((dish)=>Dish.fromMap(map))),
+        dishes: List<Dish>.from(map['dishes'].map((dish)=>Dish.fromMap(dish))),
+        
     );
 }
 
@@ -57,7 +58,7 @@ class Restaurant {
 @override
 
 String toString(){
-  return ''' Restaurant{
+  return ''' Restaurant(
   id: $id,
   imagePath: $imagePath,
   name: $name,
@@ -65,6 +66,6 @@ String toString(){
   stars: $stars,
   distance: $distance,
   categories: $categories
-  }''';
+  )''';
 }
 }

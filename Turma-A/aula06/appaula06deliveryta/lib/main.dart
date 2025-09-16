@@ -13,7 +13,7 @@ void main() async{
     MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (context){
-          return RestaurantData();
+          return restaurantData;
         }),
         ChangeNotifierProvider(create: (context)=>BagProvider())
       ],
