@@ -1,6 +1,7 @@
 
 
 import 'package:appaula09/screens/prodscreen.dart';
+import 'package:appaula09/screens/prodscreen2.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
@@ -53,7 +54,7 @@ class _CadastroprodutoState extends State<Cadastroproduto> {
   }
     _deletarproduto(){
       // metodo para deletar um produto
-      http.delete(Uri.parse("http://192.168.15.12:8000/api/produtos/${nomeprod.text}"));
+      http.delete(Uri.parse("http://10.109.83.10:8000/api/produtos/${nomeprod.text}/"));
       nomeprod.text="";
       showDialog(
         context: context, 
@@ -125,7 +126,7 @@ class _CadastroprodutoState extends State<Cadastroproduto> {
           ElevatedButton(onPressed: _deletarproduto, child: Text("Deletar produto")),
           ElevatedButton(onPressed: (){
             Navigator.push(context, MaterialPageRoute(
-              builder: (context)=>Produto_screen()));
+              builder: (context)=>Prodscreen2()));
           }, child: Text("Produtos screen"))
         ],
       ),

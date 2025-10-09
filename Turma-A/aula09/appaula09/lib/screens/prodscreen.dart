@@ -51,6 +51,7 @@ class _Produto_screenState extends State<Produto_screen> {
               textAlign: TextAlign.center,),
               subtitle: Column(
                 children: [
+                  Text("ID: ${item['id']}",style: TextStyle(fontSize: 18),),
                   Text("Valor: R\$ ${item["preco"]}",style: TextStyle(fontSize: 18),),
                   Text("Qtde: ${item["quantidade"]}",style: TextStyle(fontSize: 18),)
                 ],
