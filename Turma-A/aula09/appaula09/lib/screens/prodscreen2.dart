@@ -10,7 +10,8 @@ class Prodscreen2 extends StatefulWidget {
 }
 
 class _Prodscreen2State extends State<Prodscreen2> {
-  final String baseUrl = "http://10.109.83.10:8000/api/produtos/";
+  //final String baseUrl = "http://10.109.83.10:8000/api/produtos/";
+  final String baseUrl = "http://172.20.10.4:8000/api/produtos/";
 
   @override
   void initState(){

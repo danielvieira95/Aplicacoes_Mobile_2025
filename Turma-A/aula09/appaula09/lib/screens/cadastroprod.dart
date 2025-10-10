@@ -21,7 +21,9 @@ class _CadastroprodutoState extends State<Cadastroproduto> {
 
   // cria funçao para cadastro do produto
   _cadastrarproduto()async{
-    String url = "http://10.109.83.10:8000/api/produtos/";
+    //String url = "http://10.109.83.10:8000/api/produtos/";
+    String url = "http://172.20.10.4:8000/api/produtos/";
+     
     // cria estrutura da mensagem para cadastro dos produtos
     Map<String,dynamic>prod={
       "nome":nomeprod.text,
@@ -54,7 +56,8 @@ class _CadastroprodutoState extends State<Cadastroproduto> {
   }
     _deletarproduto(){
       // metodo para deletar um produto
-      http.delete(Uri.parse("http://10.109.83.10:8000/api/produtos/${nomeprod.text}/"));
+      http.delete(Uri.parse("http://172.20.10.4:8000/api/produtos/${nomeprod.text}/"));
+      //String url = "http://172.20.10.40:8000/api/produtos/";
       nomeprod.text="";
       showDialog(
         context: context, 
