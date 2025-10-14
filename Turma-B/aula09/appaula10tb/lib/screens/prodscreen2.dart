@@ -13,7 +13,7 @@ class Prodscreen2 extends StatefulWidget {
 
 class _Prodscreen2State extends State<Prodscreen2> {
 
-  final String baseUrl = "http://10.109.83.10:8000/api/produtos";
+  final String baseUrl = "http://10.109.83.10:8000/api/produtos/";
   
 
   @override
@@ -81,10 +81,8 @@ class _Prodscreen2State extends State<Prodscreen2> {
     final resp = await http.delete(url);
 
     if(resp.statusCode==204|| resp.statusCode==200){
-      // atualiza a lista local sem precisar refazer Get
-      setState(() {
-        dado.removeWhere((e)=>(e["id"] as num).toInt()==id);
-      });
+      
+   
       if (mounted){
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(content: Text('Produto deletado')));
