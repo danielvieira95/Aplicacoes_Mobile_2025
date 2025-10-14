@@ -1,4 +1,5 @@
 import 'package:appaula10tb/screens/prod_screen.dart';
+import 'package:appaula10tb/screens/prodscreen2.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
@@ -109,7 +110,7 @@ class _CadastroprodutoState extends State<Cadastroproduto> {
             onPressed: _cadastrarproduto, child: Text('Cadastrar')),
             ElevatedButton(onPressed: (){
               Navigator.push(context, MaterialPageRoute(
-                builder:(context)=> Produto_screen()));
+                builder:(context)=> Prodscreen2()));
 
             }, child: Text('Produtos screen'))
         ],
