@@ -140,7 +140,7 @@ class _TelaappState extends State<Telaapp> {
 
    Future<void> _drawPattern(String name)async{
     try{
-      await _post('matrix', {'pattern':name});
+      await _post('/matrix', {'pattern':name});
     }catch(_){}
 
    }
@@ -221,7 +221,6 @@ class _TelaappState extends State<Telaapp> {
                   _miniBtn('G OFF',()=>_gSet(false)),
                   _miniBtn('B ON',()=>_bSet(true)),
                   _miniBtn('B OFF',()=>_bSet(false)),
-                  _miniBtn('R ON',()=>_rSet(true)),
                   _miniBtn('Beep',()=>_beep()),
                 ],
               ),
