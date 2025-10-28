@@ -12,7 +12,7 @@ class Telaacionamento2 extends StatefulWidget {
 
 class _Telaacionamento2State extends State<Telaacionamento2> {
   // ===== AJUSTE: IP/porta do seu Pico W =====
-  static const String baseUrl ="http://192.168.15.13";
+  static const String baseUrl ="http://192.168.4.1";
       //'http://192.168.0.123'; // ex.: http://192.168.0.15
 
   // Estado mostrado
