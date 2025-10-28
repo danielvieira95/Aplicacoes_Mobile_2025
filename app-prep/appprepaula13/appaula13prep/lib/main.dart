@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:appaula13prep/screens/scanner_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
 
@@ -17,7 +18,7 @@ class QRReaderApp extends StatelessWidget {
         useMaterial3: true,
         colorSchemeSeed: Colors.indigo,
       ),
-      home: QRReaderApp(),
+      home: QrScannerPage(),
     );
   }
 }
