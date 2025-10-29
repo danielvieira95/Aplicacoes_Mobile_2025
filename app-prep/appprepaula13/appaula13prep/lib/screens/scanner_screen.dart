@@ -1,6 +1,6 @@
-import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
+
 class QrScannerPage extends StatefulWidget {
   const QrScannerPage({super.key});
 
@@ -10,14 +10,10 @@ class QrScannerPage extends StatefulWidget {
 
 class _QrScannerPageState extends State<QrScannerPage> {
   bool _handled = false;
-
   final MobileScannerController _controller = MobileScannerController(
-    // Mantive exatamente como no seu exemplo
     detectionTimeoutMs: 600,
     facing: CameraFacing.back,
     torchEnabled: false,
-    // Se quiser restringir só a QR, pode adicionar:
-    // formats: const [BarcodeFormat.qrCode],
   );
 
   @override
@@ -28,7 +24,6 @@ class _QrScannerPageState extends State<QrScannerPage> {
 
   void _onDetect(BarcodeCapture capture) {
     if (_handled) return;
-
     final barcodes = capture.barcodes;
     if (barcodes.isEmpty) return;
 
@@ -36,7 +31,7 @@ class _QrScannerPageState extends State<QrScannerPage> {
     if (raw == null || raw.isEmpty) return;
 
     _handled = true;
-    Navigator.pop(context, raw); // devolve o valor lido para a Home
+    Navigator.pop(context, raw); // devolve o valor lido
   }
 
   @override
@@ -46,8 +41,10 @@ class _QrScannerPageState extends State<QrScannerPage> {
       appBar: AppBar(
         foregroundColor: Colors.white,
         backgroundColor: Colors.black,
-        title: const Text('Escanear QR Code',
-            style: TextStyle(color: Colors.white)),
+        title: const Text(
+          'Escanear QR Code',
+          style: TextStyle(color: Colors.white),
+        ),
         actions: [
           IconButton(
             icon: const Icon(Icons.flash_on, color: Colors.white),
@@ -79,3 +76,5 @@ class _QrScannerPageState extends State<QrScannerPage> {
     );
   }
 }
+
+
